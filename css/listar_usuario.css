@@ -1,0 +1,92 @@
+body {
+    background-color: #eaeef3;
+}
+
+nav ul li a.menu{
+    color: #ffffff !important;
+}
+
+.icone{
+    color: aqua;
+}
+
+.sidebar{
+    display: block;
+    background-color: #222c3c;
+    max-width: 250px;
+    min-width: 250px;
+    min-height: 100vh; /*100 % da pagina menos 56px do menu*/
+    transition: all 0.3s;
+}
+
+nav.sidebar ul li a{
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #c7cace;
+    text-decoration: none;
+}
+/*Hover no menu e cor do Hover na opção ativa*/
+.sidebar ul li a:hover , .sidebar ul li.active a{
+    background-color: #354358;
+    color: #ecedee;
+}
+
+/*Adicionar seta Dropdown */
+.sidebar [data-toggle="collapse"]{
+    position: relative;
+}
+
+.sidebar [data-toggle="collapse"]::after{
+    content: "\f0d7";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 1rem;
+}/*Fim da seta Dropdown*/
+
+/*Colocar seta Drop UP*/
+.sidebar [aria-expanded="true"]::after{
+    content: "\f0d8";
+    right: 1rem;
+}/*Fim da seta Up*/
+
+/*Coloca cor de fundo na submenu*/
+.sidebar ul ul a{
+    background-color: #1e2835;
+}
+
+/*Padding a esquerda no submenu*/
+.sidebar ul ul a.padding-esquerda{
+    padding-left: 40px;   
+}
+
+/*Colocar menu para pc invisivel e visivel*/
+ .sidebar.toogled{
+        margin-left: -250px;
+    }
+
+/*Mudar a cor de fundo do menu principal quando selecionado*/
+.sidebar [aria-expanded="true"]{
+    background-color:#19222d;
+}
+
+@media( max-width: 768px ){ /*deixa menu tablet e smartphone inviseis*/
+    .sidebar{
+       margin-left: -250px;
+    }
+    .sidebar.toogled{
+        margin-left: 0px; /*deixa visivel menu quando clicado. A função java script altera os valores*/
+    }
+}
+
+/*Personalização do icone*/
+.pers-icone{
+    font-size: 22px; 
+    color: dodgerblue;
+}
+
+/*Conteudo -> Classes filhas da class content*/
+.titulo{
+    font-size: 2.2rem !important;
+}
+

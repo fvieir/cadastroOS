@@ -4,30 +4,40 @@ require_once"config.php";
 // Verifica se clicou no botão de enviar, senão clicar entra no else e é redirecionado
 $sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
 
-if($sendLogin){
 
-// Recebe dados do formulário
-// Função str_irreplace retira espaço em branco das variaveis recebidas 
-$usuario_rc =  filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
-$usuario = str_ireplace(" ", "", $usuario);
-$senha_rc =  filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
-$senha = str_ireplace(" ", "", $senha);
+if ($sendLogin) {
 
-	if (!empty($usuario) || !empty($senha)) {
+	$usuario_rc = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
+	$usuario = str_ireplace(" ", "", $usuario_rc);
+	$senha_rc = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
+	$senha = str_ireplace(" ", "", $senha_rc);
+
+	if ($usuario && $senha) {
 		
 		$sql = "SELECT * FROM login";
-		$resultado = mysqli_query($conexao, $sql)
+		$resultado = mysqli_query($conexao, $sql);
+		
+		if($resultado && $resultado->num_rows != 0){
 
+			$result = mysqli_fetch_assoc($resultado);
+			if ($result['USUARIO'] == $usuario && $result['SENHA'] == $senha) {
+				header("Location: dashboard.php");
+			} else {
+				header("Location: index.php");
+			}
+
+		}
 
 	} else {
 
-		echo"Não cadastrado";
+		header("Location: index.php");
+
 	}
 
-
+	
 } else {
 
-	header("location index.php");
+	header("Location: index.php");
 }
 
 ?>
