@@ -1,9 +1,11 @@
 <?php
+session_start();
 require_once"config.php";
 
 // Verifica se clicou no botão de enviar, senão clicar entra no else e é redirecionado
 $sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
 
+echo $sendLogin;
 
 if ($sendLogin) {
 
@@ -12,33 +14,33 @@ if ($sendLogin) {
 	$senha_rc = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
 	$senha = str_ireplace(" ", "", $senha_rc);
 
-	if ($usuario && $senha) {
+	$sql = "SELECT * FROM login WHERE USUARIO = '$usuario' AND SENHA = '$senha'";
+	$resultado = mysqli_query($conexao,$sql);
+
+	if(mysqli_num_rows($resultado) > 0){
+
+		$_SESSION['usuario'] = $usuario;
+		$_SESSION['senha'] = $senha;
+		header("Location: cadastro.php");
 		
-		$sql = "SELECT * FROM login";
-		$resultado = mysqli_query($conexao, $sql);
-		
-		if($resultado && $resultado->num_rows != 0){
-
-			$result = mysqli_fetch_assoc($resultado);
-			if ($result['USUARIO'] == $usuario && $result['SENHA'] == $senha) {
-				header("Location: dashboard.php");
-			} else {
-				header("Location: index.php");
-			}
-
-		}
-
 	} else {
-
-		header("Location: index.php");
+		unset($_SESSION['usuario']);
+		unset($_SESSION['senha']);
+		echo  ("<script>
+        window.alert('Usuário ou senha não cadastros')
+        window.location.href='index.php';
+    </script>");
 
 	}
 
-	
 } else {
-
-	header("Location: index.php");
+  echo  ("<script>
+        window.alert('Pagina não encontrada')
+        window.location.href='index.php';
+    </script>");
 }
 
 ?>
+
+
 

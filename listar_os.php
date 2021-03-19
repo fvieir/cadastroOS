@@ -1,8 +1,10 @@
 <?php
+session_start();
 require_once"config.php";
 
-// Verifica se clicou no botão de enviar, senão clicar entra no else e é redirecionado
-$sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
+if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
+  exit;
+}
 
 ?>
 
@@ -130,6 +132,15 @@ $sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
+
+                    <?php 
+
+                      $sql = "SELECT * FROM ordemservico";
+                      $resultado = mysqli_query($conexao, $sql);
+
+                      foreach ($resultado as $result) {
+                    ?>
+
                     <!-- Inicio da table de listar usuarios -->
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
@@ -144,18 +155,24 @@ $sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
                               </thead>
                               <tbody>
                                     <tr>
-                                      <th>1</th>
-                                      <td>FABRICIO</td>
-                                      <td class="d-none d-sm-table-cell">GOL 01</td>
-                                      <td class="d-none d-lg-table-cell d-xl-table-cell">MECANICA</td>
-                                      <td class="text-center">
-                                          <span class="d-md-none d-sm-none d-lg-block" >
-                                              <a href="visualizar_os.php" class="btn btn-sm btn-outline-primary">Visualizar
-                                              </a>
-                                              <a href="editar_usuario.html" class="btn btn-sm btn-outline-warning">Editar
-                                              </a>
-                                              <a href="apagar.html" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
-                                          </span>
+
+                        <?php 
+                          
+                                      echo"<th>".$result['CODOR']."</th>";
+                                      echo"<td>".$result['RESP']."</td>";
+                                      echo"<td class='d-none d-sm-table-cell'>".$result['APLIC']."</td>";
+                                      echo"<td class='d-none d-lg-table-cell d-xl-table-cell'>".$result['SETEXE']."</td>";
+
+                                      echo"<td class='text-center'>"
+                                          ."<span class='d-md-none d-sm-none d-lg-block'>"
+                                          ."    <a href='visualizar_os.php' class='btn btn-sm btn-outline-primary'>Visualizar"
+                                              ."</a>"
+                                              ."<a href='editar_usuario.html' class='btn btn-sm btn-outline-warning'>Editar"
+                                              ."</a>"
+                                              ."<a href='apagar.html' class='btn btn-sm btn-outline-danger' data-toggle='modal' data-target='#apagarModal'>Apagar</a>
+                                          </span>";
+                                        }
+                                        ?>
                                           <!-- Botão Dropdown do menu para tablet e smartphone -->
                                           <div class="dropdown d-lg-none d-xl-none">
                                                   <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,7 +183,8 @@ $sendLogin = filter_input(INPUT_POST, 'sendLogin', FILTER_SANITIZE_STRING);
                                                     <a class="dropdown-item" href="editar_usuario.html">Editar</a>
                                                     <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
                                               </div>
-                                            </div><!-- Fim do botão Dropdown -->
+                                            </div>;
+                                          
                                         </td>
                                     </tr>
                                     <tr>
