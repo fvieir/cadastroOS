@@ -135,28 +135,25 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
 
                     <?php 
 
-                      $sql = "SELECT * FROM ordemservico";
+                      $sql = "SELECT * FROM ordemservico ORDER BY CODOR DESC";
                       $resultado = mysqli_query($conexao, $sql);
-
+                      ?>
+                        <!-- Inicio da table de listar usuarios -->
+                          <div class="table-responsive">
+                              <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                          <tr>
+                                            <th>Código</th>
+                                            <th>Responsavel</th>
+                                            <th class="d-none d-sm-table-cell">Aplicação</th>
+                                            <th class="d-none d-lg-table-cell d-xl-table-cell">Setor executante</th>
+                                            <th class="text-center">Ações</th>    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr>
+                      <?php
                       foreach ($resultado as $result) {
-                    ?>
-
-                    <!-- Inicio da table de listar usuarios -->
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                              <thead>
-                                    <tr>
-                                      <th>Código</th>
-                                      <th>Responsavel</th>
-                                      <th class="d-none d-sm-table-cell">Aplicação</th>
-                                      <th class="d-none d-lg-table-cell d-xl-table-cell">Setor executante</th>
-                                      <th class="text-center">Ações</th>    
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                    <tr>
-
-                        <?php 
                           
                                       echo"<th>".$result['CODOR']."</th>";
                                       echo"<td>".$result['RESP']."</td>";
@@ -165,80 +162,27 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
 
                                       echo"<td class='text-center'>"
                                           ."<span class='d-md-none d-sm-none d-lg-block'>"
-                                          ."    <a href='visualizar_os.php' class='btn btn-sm btn-outline-primary'>Visualizar"
+                                          ."    <a href='visualizar_os.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-primary'>Visualizar"
                                               ."</a>"
                                               ."<a href='editar_usuario.html' class='btn btn-sm btn-outline-warning'>Editar"
                                               ."</a>"
                                               ."<a href='apagar.html' class='btn btn-sm btn-outline-danger' data-toggle='modal' data-target='#apagarModal'>Apagar</a>
-                                          </span>";
-                                        }
-                                        ?>
-                                          <!-- Botão Dropdown do menu para tablet e smartphone -->
-                                          <div class="dropdown d-lg-none d-xl-none">
-                                                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Ações
-                                                  </button>
-                                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
-                                                    <a class="dropdown-item" href="visualizar_os.php">Visualizar</a>
-                                                    <a class="dropdown-item" href="editar_usuario.html">Editar</a>
-                                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
-                                              </div>
-                                            </div>;
-                                          
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <th>2</th>
-                                      <td>JOAO</td>
-                                      <td class="d-none d-sm-table-cell">PALIO 02</td>
-                                      <td class="d-none d-lg-table-cell d-xl-table-cell">ELETRICA</td>
-                                      <td class="text-center">
-                                          <span class="d-md-none d-sm-none d-lg-block" >
-                                              <a href="visualizar_os.php" class="btn btn-sm btn-outline-primary">Visualizar
-                                              </a>
-                                              <a href="editar_usuario.html" class="btn btn-sm btn-outline-warning">Editar
-                                              </a>
-                                              <a href="apagar.html" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
-                                          </span>
-                                          <!-- Botão Dropdown do menu para tablet e smartphone -->
-                                          <div class="dropdown d-lg-none d-xl-none">
-                                                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Ações
-                                                  </button>
-                                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
-                                                    <a class="dropdown-item" href="visualizar_os.php">Visualizar</a>
-                                                    <a class="dropdown-item" href="editar_usuario.html">Editar</a>
-                                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
-                                              </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <th>3</th>
-                                      <td>PEDRO</td>
-                                      <td class="d-none d-sm-table-cell">VOYAGE 03</td>
-                                      <td class="d-none d-lg-table-cell d-xl-table-cell">LANTERNAGEM</td>
-                                      <td class="text-center">
-                                          <span class="d-md-none d-sm-none d-lg-block" >
-                                              <a href="visualizar_os.php" class="btn btn-sm btn-outline-primary">Visualizar
-                                              </a>
-                                              <a href="editar_usuario.html" class="btn btn-sm btn-outline-warning">Editar
-                                              </a>
-                                              <a href="apagar.html" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
-                                          </span>
-                                          <!-- Botão Dropdown do menu para tablet e smartphone -->
-                                          <div class="dropdown d-lg-none d-xl-none">
-                                                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Ações
-                                                  </button>
-                                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
-                                                    <a class="dropdown-item" href="visualizar_os.php">Visualizar</a>
-                                                    <a class="dropdown-item" href="editar.html">Editar</a>
-                                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal">Apagar</a>
-                                              </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                          </span>"
+                                         ."<!-- Botão Dropdown do menu para tablet e smartphone -->"
+                                          ."<div class='dropdown d-lg-none d-xl-none'>"
+                                                  ."<button class='btn btn-outline-primary dropdown-toggle' type='button' id='acoesMenu' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+                                                    ."Ações"
+                                                  ."</button>"
+                                              ."<div class='dropdown-menu dropdown-menu-right' aria-labelledby='acoesMenu'>"
+                                                    ."<a class='dropdown-item' href='visualizar_os.php'>Visualizar</a>"
+                                                    ."<a class='dropdown-item' href='editar_usuario.html'>Editar</a>"
+                                                    ."<a class='dropdown-item' href='apagar.html' data-toggle='modal' data-target='#apagarModal' >Apagar</a>"
+                                              ."</div>"
+                                            ."</div>"
+                                        ."</td>"
+                                    ."</tr>";
+                                      }
+                                      ?>
                               </tbody>
                         </table>
                     </div>    

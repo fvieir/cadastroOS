@@ -99,12 +99,12 @@ if (mysqli_num_rows($resultado) > 0) {
                                 <a href="#" class="padding-esquerda">
                                     <span class="pers-icone">
                                         <i class="fas fa-key"></i>
-                                    </span>Aplicações
+                                    </span>Listar O.S.
                                 </a>
                             </li>
                         </ul>
                     </li>                   
-                    <li class="active"><a href="#">item</a></li>                 
+                    <li class="active"><a href="listar_os.php">Listar O.S.</a></li>                 
                     <li>
                         <a href="logout.php">
                             <span class="pers-icone">
@@ -124,17 +124,28 @@ if (mysqli_num_rows($resultado) > 0) {
                             <h2 class="display-4 titulo "> Cadastrar Ordem de Serviço</h2>
                         </div>
                         <!-- Botão cadastrar usuario -->
-                        <a href="">
+                        <a href="listar_os.php">
                             <div class="p-2">
                                 <button class="btn btn-outline-info btn-sm"> Listar</button>
                             </div>
                         </a>
                     </div><hr>
+
+                    <?php 
+                    if (isset($_SESSION['msg'])) {
+                        echo $_SESSION['msg'];
+                        unset($_SESSION['msg']);
+                    }
+
+
+                    ?>
+
+
                     <form method="POST" action="validaCadastro.php">
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label>Codigo da O.S.</label>
-                                <input name="codigo" value="<?php echo $codigo_os ?>" type="text" class="form-control" id="codigo" disabled>
+                                <input name="codigo" value="<?php echo $codigo_os ?>" type="text" class="form-control" id="codigo" readonly = "true" >
                             </div>
                         </div>
                         <div class="form-row">
@@ -198,7 +209,7 @@ if (mysqli_num_rows($resultado) > 0) {
                             <label>Observação</label>
                             <textarea name="regserv" rows="5" class="form-control" id="regserv" placeholder="Registre sua solicitação de Serviço"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <button type="submit" name="sendCadastro" class="btn btn-success" value="cadastrar">Cadastrar</button>
                     </form>
                 </div>
             </div>    
