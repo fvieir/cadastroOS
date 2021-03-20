@@ -1,5 +1,12 @@
 <?php
+session_start();
 require_once"config.php";
+
+
+if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha']) ) {
+    exit;
+
+}
 
 ?>
 
@@ -58,10 +65,10 @@ require_once"config.php";
         
         <div class="d-flex">
             <!-- Inicio do menu lateral -->
-            <nav class="sidebar"> 
+             <nav class="sidebar"> 
                 <ul class="list-unstyled">
                     <li>
-                        <a href="index.html">
+                        <a href="dashboard.php">
                             <!-- Adicionar icone Font awesome-->
                             <span class="pers-icone">
                                 <i class="fas fa-tachometer-alt"></i>
@@ -72,60 +79,28 @@ require_once"config.php";
                         <a href="#submenu1" data-toggle="collapse">
                             <span class="pers-icone">
                                 <i class="fas fa-user-circle"></i>
-                            </span>Usuario
+                            </span>Cadastros
                         </a>
                         <ul class="list-unstyled collapse" id="submenu1">
                             <li>
-                                <a href="listar_usuarios.html" class="padding-esquerda">
+                                <a href="cadastro.php" class="padding-esquerda">
                                     <span class="pers-icone">
                                         <i class="fas fa-users"></i>
-                                    </span>Usuarios
+                                    </span>Ordem de Serviço
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="padding-esquerda">
                                     <span class="pers-icone">
                                         <i class="fas fa-key"></i>
-                                    </span>Nivel de acesso
+                                    </span>Listar O.S.
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>                   
+                    <li class="active"><a href="listar_os.php">Listar O.S.</a></li>                 
                     <li>
-                        <a href="#submenu2" data-toggle="collapse">
-                            <span class="pers-icone">
-                            <i class="fas fa-list"></i>
-                            </span>Menu
-                        </a>
-                        <ul class="list-unstyled collapse" id="submenu2">
-                            <li>
-                                <a href="#" class="padding-esquerda">
-                                    <span class="pers-icone">
-                                       <i class="fas fa-file-alt"></i>
-                                    </span> Páginas
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="padding-esquerda">
-                                    <span class="pers-icone">
-                                       <i class="fab fa-elementor"></i>
-                                    </span>itens de menu
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="pers-icone">
-                                <i class="fas fa-stroopwafel"></i>
-                            </span>item
-                        </a>
-                    </li>
-                    <li><a href="#">item</a></li>
-                    <li class="active"><a href="#">item</a></li>
-                    <li><a href="#">item</a></li>
-                    <li>
-                        <a href="#">
+                        <a href="logout.php">
                             <span class="pers-icone">
                                 <i class="fas fa-sign-out-alt"></i>
                             </span>Sair   
@@ -135,6 +110,23 @@ require_once"config.php";
             </nav>
             <!-- Fim do menu lateral -->
             
+            <?php 
+
+            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+                if ($id) {
+                     $sql="SELECT * FROM ordemservico WHERE CODOR = $id";
+                     $resultado = mysqli_query($conexao, $sql);
+
+                     if (mysqli_num_rows($resultado) > 0) {
+                    
+                        $result = mysqli_fetch_assoc($resultado);
+                
+                     }
+                }
+
+
+            ?>
             <!-- Inicio cadastrar usuarios-->
             <div class="content p-1 w-100">
                 <div class="list-group-item">
@@ -145,11 +137,11 @@ require_once"config.php";
                         <!-- Botão cadastrar usuario -->
                         <div class="p-2">
                             <span class="d-md-none d-sm-none d-lg-block" >
-                              <a href="listar_usuarios.html" class="btn btn-sm btn-outline-info">Listar
+                              <a href="listar_os.php?id=<?php echo $id ?>" class="btn btn-sm btn-outline-info">Listar
                               </a>
-                              <a href="visualizar_usuario.html" class="btn btn-sm btn-outline-primary">Visualizar
+                              <a href="visualizar_os.php?id=<?php echo $id ?>" class="btn btn-sm btn-outline-primary">Visualizar
                               </a>
-                              <a href="apagar.html" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
+                              <a href="#" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
                             </span>
                                   <!-- Botão Dropdown do menu para tablet e smartphone -->
                             <div class="dropdown d-lg-none d-xl-none">
@@ -157,73 +149,122 @@ require_once"config.php";
                                 Ações
                               </button>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
-                                    <a class="dropdown-item" href="listar_usuarios.html">Listar</a>
-                                    <a class="dropdown-item" href="visualizar_usuario.html">Visulizar</a>
-                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
+                                    <a class="dropdown-item" href="listar_os.php?id=<?php echo $id ?>">Listar</a>
+                                    <a class="dropdown-item" href="isualizar_os.php?id=<?php echo $id ?>">Visulizar</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
                               </div>
                             </div><!-- Fim do botão Dropdown -->
                             </div>
                     </div><hr>
-                    <form>
+                   <form method="POST" action="validaEditar.php">
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Nome</label>
-                                <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome compleo">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>E-mail</label>
-                                <input name="email" type="email" class="form-control" id="email" placeholder="Digite seu e-mail">
+                            <div class="form-group col-md-2">
+                                <label>Codigo da O.S.</label>
+                                <input name="codigo" value="<?php echo $result['CODOR'] ?>" type="text" class="form-control" id="codigo" readonly = "true" >
                             </div>
                         </div>
-                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                 <label>Senha</label>
-                                <input name="senha" type="password" class="form-control" id="senha" placeholder="senha">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Confirmar senha</label>
-                                <input name="confSenha" type="password" class="form-control" id="confSenha" placeholder="Confirmar senha">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Tag</label>
+                                <input name="tag" value="<?php echo $result['TAG'] ?>" type="text" class="form-control" id="tag" placeholder="Descrição de forma resumida">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                  <label>Endereço</label>
-                                  <input name="endereco" type="text" class="form-control" id="endereco" placeholder="Rua, lagadouro...">
+                                <label>Tipo de Manutenção</label>
+                                <input name="tipman" value="<?php echo $result['TIPMAN'] ?>" type="text" class="form-control" id="tipman" placeholder="Tipo de Manutenção">
                             </div>
-                            <div class="form-group col-md-2">
-                                   <label>Numero</label>
-                                   <input name="numero" type="text" class="form-control" id="numero" placeholder="123">
-                            </div>
-                            <div class="form-group col-md-4">
-                                    <label>Complemento</label>
-                                    <input name="completo" type="text" class="form-control" id="completo" placeholder="sala 1 , apto 3 ...">
-                            </div>
-                        </div>
-                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                  <label>Estado</label>
-                                  <select name="estado" id="estado" class="form-control">
-                                    <option selected>Selecione</option>
-                                    <option>...</option>
-                                  </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                   <label>Cidade</label>
-                                   <select name="cidade" id="cidade" class="form-control">
-                                    <option selected>Selecione</option>
-                                    <option>...</option>
-                                  </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                    <label>CEP</label>
-                                    <input name="cep" type="text" class="form-control" id="cep" placeholder="12345-678">
+                                <label>Setor Executante</label>
+                                <input name="setexe" value="<?php echo $result['SETEXE'] ?>" type="text" class="form-control" id="setexe" placeholder="Setor que ira executar a Manutenção">
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Responsável</label>
+                                <input name="resp" type="text" value="<?php echo $result['RESP'] ?>" class="form-control" id="resp" placeholder="Quem vai executar a Manutenção?">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Aplicação</label>
+                                <input name="aplic" type="text" value="<?php echo $result['APLIC'] ?>" class="form-control" id="aplic" placeholder="Qual maquina ou equipamento precisa de Manutenção">
+                            </div>         
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Estado</label>
+                                <select name="estado" id="estado" class="form-control">
+                                    <option selected>Selecione</option>
+
+                                    <?php 
+                                    
+                                    $check1 ="";
+                                    $check2 =""; 
+                                    $check3 =""; 
+                                    $check4 ="";
+                                    $check5 =""; 
+                                   
+
+                                    switch ($result['ESTADO']) {
+                                        case '1':
+                                            $check1 = "selected";
+                                            break;
+                                        
+                                        case '2':
+                                            $check2 = "selected";
+                                            break;    
+
+                                    }
+
+                                     switch ($result['CIDADE']) {
+                                        case '1':
+                                            $check3 = "selected";
+                                            break;
+                                        
+                                        case '2':
+                                            $check4 = "selected";
+                                            break;   
+
+                                        case '3':
+                                            $check5 = "selected";
+                                            break;     
+
+                                    }
+
+
+                                    ?>
+
+
+                                    <option value="1"<?php echo $check1 ?>>MG</option>
+                                    <option value="2" <?php echo $check2 ?> >SP</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Cidade</label>
+                                <select name="cidade" id="cidade" class="form-control">
+                                    <option >Selecione</option>
+                                    <option value="1" <?php echo $check3 ?>>Pará de Minas</option>
+                                    <option value="2" <?php echo $check4 ?>>Belo horizonte</option>
+                                    <option value="3" <?php echo $check5 ?>>Santos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Empresa</label>
+                                    <input type="text" name="empresa" value="<?php echo $result['EMPRESA'] ?>" class="form-control" id="empresa" placeholder="Digite o nome da empresa do Serviço">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Filial</label>
+                                    <input type="text" name="filial" value="<?php echo $result['FILIAL'] ?>" class="form-control" id="filial" placeholder="Digite o nome da Filial que precisa do servico">
+                                </div>
+                         </div>
+                           
+                        
                         <div class="form-group">
                             <label>Observação</label>
-                            <textarea name="observacao" type="text" rows="5" class="form-control" id="observacao" placeholder=""></textarea>
+                            <textarea name="regserv"  rows="5" class="form-control" id="regserv" placeholder="Registre sua solicitação de Serviço"><?php echo $result['REGSERV'] ?></textarea>
                         </div>
-                        <button type="submit" class="btn btn-warning">Salvar</button>
+                        <button type="submit" name="sendCadastro" class="btn btn-warning" value="cadastrar">Salvar</button>
                     </form>
                 </div>
             </div>    

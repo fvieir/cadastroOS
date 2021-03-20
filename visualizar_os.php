@@ -104,45 +104,12 @@ require_once"config.php";
             </nav>
             <!-- Fim do menu lateral -->
             
-            <!-- Inicio cadastrar usuarios-->
-            <div class="content p-1 w-100">
-                <div class="list-group-item">
-                    <div class="d-flex">
-                            <div class="mr-auto p-2 mb-1">
-                                <h2 class="display-4 titulo "> Ordem de Serviço</h2>
-                            </div>
-                        <!-- Botão cadastrar usuario -->
-                        <div class="p-2">
-                            <span class="d-md-none d-sm-none d-lg-block" >
-                              <a href="listar_os.php" class="btn btn-sm btn-outline-info">Listar
-                              </a>
-                              <a href="editar_os.php?=" class="btn btn-sm btn-outline-warning">Editar
-                              </a>
-                              <a href="#" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
-                            </span>
-                                  <!-- Botão Dropdown do menu para tablet e smartphone -->
-                            <div class="dropdown d-lg-none d-xl-none">
-                              <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Ações
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
-                                    <a class="dropdown-item" href="listar_usuarios.html">Listar</a>
-                                    <a class="dropdown-item" href="editar_os.php?id=">Editar</a>
-                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
-                              </div>
-                            </div><!-- Fim do botão Dropdown -->
-                        </div>
-                    </div><hr>
-
-                    <?php 
+            <?php 
 
                       $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
                       if ($id) {
-                          
-
-                          
-
+                
                           $sql = "SELECT *,
                           CASE 
                             WHEN ESTADO = 1 THEN 'MG' 
@@ -163,10 +130,36 @@ require_once"config.php";
                             
                           } 
                       }
-
                      ?>
-
-
+            <!-- Inicio cadastrar usuarios-->
+            <div class="content p-1 w-100">
+                <div class="list-group-item">
+                    <div class="d-flex">
+                            <div class="mr-auto p-2 mb-1">
+                                <h2 class="display-4 titulo "> Ordem de Serviço</h2>
+                            </div>
+                        <!-- Botão cadastrar usuario -->
+                        <div class="p-2">
+                            <span class="d-md-none d-sm-none d-lg-block" >
+                              <a href="listar_os.php" class="btn btn-sm btn-outline-info">Listar
+                              </a>
+                              <a href="editar_os.php?id=<?php echo $id ?>" class="btn btn-sm btn-outline-warning">Editar
+                              </a>
+                              <a href="#" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#apagarModal">Apagar</a>
+                            </span>
+                                  <!-- Botão Dropdown do menu para tablet e smartphone -->
+                            <div class="dropdown d-lg-none d-xl-none">
+                              <button class="btn btn-outline-primary dropdown-toggle" type="button" id="acoesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ações
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesMenu">
+                                    <a class="dropdown-item" href="listar_usuarios.html">Listar</a>
+                                    <a class="dropdown-item" href="editar_os.php?id=<?php echo $id ?>">Editar</a>
+                                    <a class="dropdown-item" href="apagar.html" data-toggle="modal" data-target="#apagarModal" >Apagar</a>
+                              </div>
+                            </div><!-- Fim do botão Dropdown -->
+                        </div>
+                    </div><hr>
 
                     <!-- Visualização de usuario -->
                     <dl class="row">
