@@ -1,8 +1,12 @@
 <?php
 session_start();
-
-
 require_once 'config.php';
+
+// Caso já tenha uma sessão em aberto, não deixa o usuario logar novamente
+if (isset($_SESSION['usuario']) && isset($_SESSION['senha'])) {
+    header("Location: cadastro.php");
+}
+
 
 ?>
 <!doctype html>
@@ -21,7 +25,12 @@ require_once 'config.php';
         <img class="mb-4" src="imagens/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Area Restrita</h1>
 
-        
+        <?php 
+            if (isset($_SESSION['msg'])) {
+              echo $_SESSION['msg'];
+              unset($_SESSION['msg']);
+            }
+        ?>
        
         <div class="form-group">
             <label>Usuário</label>

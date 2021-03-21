@@ -27,7 +27,7 @@ if ($sendCadastro) {
     $sql = "UPDATE ordemservico SET TAG = '".$tag."', TIPMAN ='".$tipman."', SETEXE = '".$setexe."', 
             RESP ='".$resp."', APLIC = '".$aplic."', ESTADO ='".$estado."', CIDADE ='".$cidade."',
             EMPRESA = '".$empresa."', FILIAL ='".$filial."', REGSERV ='".$regserv."' WHERE CODOR =".$codigo; 
-    echo $sql;
+    //echo $sql;
 
     if (mysqli_query($conexao, $sql)) {
 

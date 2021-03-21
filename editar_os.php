@@ -4,6 +4,10 @@ require_once"config.php";
 
 
 if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha']) ) {
+   echo  ("<script>
+        window.alert('Pagina não encontrada')
+        window.location.href='index.php';
+    </script>");
     exit;
 
 }

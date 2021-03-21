@@ -3,6 +3,10 @@ session_start();
 require_once 'config.php';
 
 if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha']) ) {
+    echo  ("<script>
+        window.alert('Pagina não encontrada')
+        window.location.href='index.php';
+    </script>");
     exit;
 
 }
@@ -96,7 +100,7 @@ if (mysqli_num_rows($resultado) > 0) {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="padding-esquerda">
+                                <a href="listar_os.php" class="padding-esquerda">
                                     <span class="pers-icone">
                                         <i class="fas fa-key"></i>
                                     </span>Listar O.S.

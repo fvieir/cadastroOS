@@ -3,7 +3,11 @@ session_start();
 require_once"config.php";
 
 if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
-  exit;
+   echo  ("<script>
+        window.alert('Pagina não encontrada')
+        window.location.href='index.php';
+    </script>");
+    exit;
 }
 
 ?>
@@ -50,7 +54,7 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                                     <i class="fas fa-user-circle"></i>
                                 </span>Perfil
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="logout.php">
                                  <span class="pers-icone">
                                     <i class="fas fa-sign-out-alt"></i>
                                 </span>Sair
@@ -99,7 +103,7 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                    
                     <li><a href="#">item</a></li>
                     <li>
-                        <a href="#">
+                        <a href="logout.php">
                             <span class="pers-icone">
                                 <i class="fas fa-sign-out-alt"></i>
                             </span>Sair   
@@ -126,14 +130,19 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                         </a>
                     </div><hr>
                      <!-- Alerta de usuario excluido -->
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <!---<div class="alert alert-success alert-dismissible fade show" role="alert">
                       Usuario exlcuido com sucesso!
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                    </div>
+                    </div> -->
 
                     <?php 
+
+                    if (isset($_SESSION['msg'])) {
+                      echo $_SESSION['msg'];
+                      unset($_SESSION['msg']);
+                    }
 
                       $sql = "SELECT * FROM ordemservico ORDER BY CODOR DESC";
                       $resultado = mysqli_query($conexao, $sql);
@@ -164,9 +173,9 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                                           ."<span class='d-md-none d-sm-none d-lg-block'>"
                                           ."    <a href='visualizar_os.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-primary'>Visualizar"
                                               ."</a>"
-                                              ."<a href='editar_usuario.html' class='btn btn-sm btn-outline-warning'>Editar"
+                                              ."<a href='editar_os.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-warning'>Editar"
                                               ."</a>"
-                                              ."<a href='apagar.html' class='btn btn-sm btn-outline-danger' data-toggle='modal' data-target='#apagarModal'>Apagar</a>
+                                              ."<a href='validaDelete.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-danger'>Apagar</a>
                                           </span>"
                                          ."<!-- Botão Dropdown do menu para tablet e smartphone -->"
                                           ."<div class='dropdown d-lg-none d-xl-none'>"
@@ -191,21 +200,21 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
         </div> 
         
         <!-- Modal, apagar usuarios -->
-        <div class="modal fade" id="apagarModal" tabindex="-1" role="dialog" aria-labelledby="apagarModalLabel" aria-hidden="true">
+        <div class="modal fade" id="#apagarModal" tabindex="-1" role="dialog" aria-labelledby="apagarModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white" id="apagarModalLabel">Exlcuir usuario</h5>
+                <h5 class="modal-title text-white" id="apagarModalLabel">Exlcuir O.S.</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                Tem certeza que deseja exlcuir o usuario selecionado?
+                Tem certeza que deseja exlcuir a O.S. selecionada ?
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Apagar</button>
+                <button type="submit" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+               <button type="button" class="btn btn-danger" >Apagar</button> 
               </div>
             </div>
           </div>

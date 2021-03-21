@@ -17,4 +17,12 @@ $(document).ready(function(){
     
 });
 
+$(document).ready(function(ev){
+    $().click(function(){
+
+
+    });
+
+});
+
 
