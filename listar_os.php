@@ -175,7 +175,7 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                                               ."</a>"
                                               ."<a href='editar_os.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-warning'>Editar"
                                               ."</a>"
-                                              ."<a href='validaDelete.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-danger'>Apagar</a>
+                                              ."<a href='validaDelete.php?id={$result['CODOR']}' class='btn btn-sm btn-outline-danger'data-confirm='Tem certeza que deseja apagar o registros'>Apagar</a>
                                           </span>"
                                          ."<!-- Botão Dropdown do menu para tablet e smartphone -->"
                                           ."<div class='dropdown d-lg-none d-xl-none'>"
@@ -185,7 +185,7 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
                                               ."<div class='dropdown-menu dropdown-menu-right' aria-labelledby='acoesMenu'>"
                                                     ."<a class='dropdown-item' href='visualizar_os.php'>Visualizar</a>"
                                                     ."<a class='dropdown-item' href='editar_usuario.html'>Editar</a>"
-                                                    ."<a class='dropdown-item' href='apagar.html' data-toggle='modal' data-target='#apagarModal' >Apagar</a>"
+                                                    ."<a class='dropdown-item' href='apagar.html' >Apagar</a>"
                                               ."</div>"
                                             ."</div>"
                                         ."</td>"
@@ -199,27 +199,7 @@ if (!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])) {
             </div>
         </div> 
         
-        <!-- Modal, apagar usuarios -->
-        <div class="modal fade" id="#apagarModal" tabindex="-1" role="dialog" aria-labelledby="apagarModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white" id="apagarModalLabel">Exlcuir O.S.</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Tem certeza que deseja exlcuir a O.S. selecionada ?
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-               <button type="button" class="btn btn-danger" >Apagar</button> 
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Fim da modal apagar usuarios -->
+        
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
